@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+-<LinearLayout android:orientation="vertical" android:background="@drawable/bg" android:layout_height="match_parent" android:layout_width="match_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+
+<TextView android:background="@drawable/logimg" android:layout_height="100dp" android:layout_width="175dp" android:layout_marginTop="10dp" android:layout_marginBottom="10dp" android:layout_gravity="center_horizontal"/>
+
+<TextView android:layout_height="30dp" android:layout_width="175dp" android:layout_marginTop="10dp" android:layout_marginBottom="10dp" android:layout_gravity="center_horizontal" android:text="User-Name" android:layout_marginLeft="25dp" android:textSize="25dp" android:textColor="@android:color/white"/>
+
+
+-<EditText android:background="@drawable/textfield" android:layout_height="30dp" android:layout_width="match_parent" android:layout_marginLeft="30dp" android:textColor="@android:color/white" android:inputType="text" android:hint=" Enter User Name" android:ems="10" android:layout_marginRight="30dp" android:paddingLeft="10dp" android:id="@+id/editText1">
+
+<requestFocus android:layout_width="wrap_content"/>
+
+</EditText>
+
+<TextView android:layout_height="30dp" android:layout_width="175dp" android:layout_marginTop="10dp" android:layout_marginBottom="10dp" android:layout_gravity="center_horizontal" android:text="Password" android:layout_marginLeft="25dp" android:textSize="25dp" android:textColor="@android:color/white"/>
+
+<EditText android:background="@drawable/textfield" android:layout_height="30dp" android:layout_width="match_parent" android:layout_marginLeft="30dp" android:textColor="@android:color/white" android:hint=" Enter Password" android:ems="10" android:layout_marginRight="30dp" android:paddingLeft="10dp" android:id="@+id/editText2"/>
+
+<Spinner android:background="@drawable/dropdown" android:layout_height="40dp" android:layout_width="match_parent" android:textColor="@android:color/white" android:id="@+id/spinner" android:popupBackground="@drawable/bg" android:layout_margin="25dp"/>
+
+
+-<LinearLayout android:orientation="horizontal" android:layout_height="0dp" android:layout_width="match_parent" android:layout_margin="25dp" android:weightSum="2" android:layout_weight="1">
+
+<Button android:background="@drawable/login" android:layout_height="40dp" android:layout_width="0dp" android:id="@+id/login" android:layout_weight="1"/>
+
+<Button android:background="@drawable/cancel" android:layout_height="40dp" android:layout_width="0dp" android:layout_marginLeft="10dp" android:id="@+id/cancel" android:layout_weight="1"/>
+
+</LinearLayout>
+
+</LinearLayout>
