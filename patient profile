@@ -1,0 +1,205 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class patientprofile extends Activity {
+
+
+	EditText edpcity, edpname, edpadd, edpno, edpemail, edproblem;
+	Button pupdate;
+	SQLiteDatabase db;
+	TextView tv1,tv2;
+	String problem, city, nam, ad, num, mail;
+	ImageView I2;
+	String StudImgPath1,StudImgPath; 
+	
+
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+
+		View rootView = inflater.inflate(
+				R.layout.patientprofile, null);
+
+		db = getActivity().openOrCreateDatabase("getdoctor",
+				Context.MODE_PRIVATE, null);
+		// db.execSQL("drop table if exists cat");
+		db.execSQL("create table if not exists appointment(id integer primary key autoincrement , name varchar2(50) ,address varchar2(20),contact integer(12),email varchar2(20),problem varchar2(20),doname varchar2(20),date varchar2(10),time varchar2(10))");
+		db.execSQL("create table if not exists doctor(d_id integer primary key autoincrement , d_name varchar2(50) ,d_address varchar2(20),d_gender varchar2(10),d_city varchar2(10) ,d_contact integer(12),d_uid varchar2(32),d_psw varchar2(16),d_email varchar2(20),d_speciality varchar2(20),d_qualification varchar2(20),d_image varchar2(20),d_date varchar2(10),d_time varchar2(10))");
+		db.execSQL("create table if not exists patient(p_id integer primary key autoincrement, p_name varchar2(50),p_address varchar2(20),p_gender varchar2(10),p_city varchar2(10),p_contact integer(12),p_email varchar2(20),p_uid varchar2(32),p_psw varchar2(16),p_problem varchar2(20),p_image varchar2(20),dname varchar2(20),p_date varchar2(10),p_time varchar2(10))");
+		db.execSQL("create table if not exists receptionist(r_id integer primary key autoincrement , r_name varchar2(50) ,r_address varchar2(20),r_gender varchar2(10) ,r_city varchar2(10),r_contact integer(12),r_email varchar2(20),r_uid varchar2(32),r_psw varchar2(16),doctor_name varchar2(20),r_date varchar2(10),r_time varchar2(10))");
+
+edproblem = (EditText) rootView.findViewById(R.id.txt_problem);
+		edpcity = (EditText) rootView.findViewById(R.id.txt_pcity);
+		edpname = (EditText) rootView.findViewById(R.id.txt_pname);
+		edpadd = (EditText) rootView.findViewById(R.id.txt_paddress);
+		edpno = (EditText) rootView.findViewById(R.id.txt_pno);
+		edpemail = (EditText) rootView.findViewById(R.id.txt_pemail);
+		tv1=(TextView) rootView.findViewById(R.id.tvpname);
+		tv2=(TextView) rootView.findViewById(R.id.tvpemail);
+		
+		I2 = (ImageView) rootView.findViewById(R.id.pcover);
+		Cursor c1 = db.rawQuery("select * from patient where p_uid= '"
+				+ loginn.getuserid + "'", null);
+		
+		Toast.makeText(getActivity(),loginn.getuserid+"",Toast.LENGTH_LONG).show();
+		String pname = null, padd = null, pno = null, pemail = null, pcity = null,pcover=null;
+		
+		if (c1 != null) {
+			if (c1.moveToFirst()) {
+				do {
+					ArrayList<HashMap<String, String>> ar1 = new ArrayList<HashMap<String, String>>();
+					HashMap<String, String> map = new HashMap<String, String>();
+					pname = c1.getString(c1.getColumnIndex("p_name"));
+					padd = c1.getString(c1.getColumnIndex("p_address"));
+					pno = c1.getString(c1.getColumnIndex("p_contact"));
+			
+					pcover=c1.getString(c1.getColumnIndex("p_cover"));
+					pemail = c1.getString(c1.getColumnIndex("p_email"));
+					pcity = c1.getString(c1.getColumnIndex("p_city"));
+					map.put("name1", pname);
+					map.put("add1", padd);
+					map.put("no1", pno);
+					
+					map.put("iim", pcover);
+					map.put("city1", pcity);
+					map.put("email1", pemail);// add into Hash Map
+					
+					//Toast.makeText(getActivity(),map+"",Toast.LENGTH_LONG).show();
+					
+					edpname.setText(pname);
+					edpadd.setText(padd);
+					edpno.setText(pno);
+					edpemail.setText(pemail);
+					edpcity.setText(pcity);
+					tv1.setText(pname);
+					tv2.setText(pemail);
+					
+					I2.setImageURI(Uri.parse(pcover));
+					ar1.add(map); // add into arraylist
+				} while (c1.moveToNext());
+			}
+			// String[] from = { "city" }; // key value of Hash Map
+			// int[] to = { R.id.tv_SpinerValue }; // id Of control on which you
+			// want to
+			// store
+
+			// int[] to={R.id.sp_Uni}; // id Of control on which you want to
+			// store
+			// SimpleAdapter simpleAdapter=new
+			// SimpleAdapter(context,ar,R.layout.support_simple_spinner_dropdown_item,from,to);
+
+			// SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(),
+			// ar,
+			// R.layout.custspinnervalue, from, to);
+
+			// loadcityspinner();
+			// loadfacilityspinner();
+
+		}
+		
+	
+		I2.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+
+				Intent intent = new Intent();
+				intent.setType("image/*");
+				intent.setAction(intent.ACTION_GET_CONTENT);
+				startActivityForResult(intent.createChooser(intent, "Select Picture"),
+						2);
+
+
+			}
+		});
+
+
+		pupdate = (Button) rootView.findViewById(R.id.btn_pupdate);
+
+		pupdate.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				problem = edproblem.getText().toString();
+				city = edpcity.getText().toString();
+				nam = edpname.getText().toString();
+				ad = edpadd.getText().toString();
+				num = edpno.getText().toString();
+				mail = edpemail.getText().toString();
+
+				db.execSQL("update patient set p_name='" + nam + "',p_address='"
+						+ ad + "',p_contact='" + num + "',p_email='" + mail
+						+ "',p_problem='" + problem + "',p_city='"
+						+ city + "',p_cover='"+StudImgPath1+"' where p_uid= '"
+						+ loginn.getuserid + "'");
+				Toast.makeText(getActivity(), "Update Success",
+						Toast.LENGTH_SHORT).show();
+
+			}
+		});
+
+		return rootView;
+	}
+	
+	 private ContextWrapper getActivity() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private void StudImagedata() {
+
+	        Intent intent = new Intent();
+	        intent.setType("image/*");
+	        intent.setAction(intent.ACTION_GET_CONTENT);
+	        startActivityForResult(intent.createChooser(intent, "Select Picture"), 1);
+
+	    }
+
+	    @Override
+		public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	        super.onActivityResult(requestCode, resultCode, data);
+
+	
+	        if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
+	            Uri selectimg = data.getData();
+	            StudImgPath1 = getpath(selectimg);
+	            I2.setVisibility(View.VISIBLE);
+	            I2.setImageURI(selectimg);
+
+	            Toast.makeText(getActivity().getBaseContext(), StudImgPath1, Toast.LENGTH_LONG).show();
+
+	        }
+	    }
+
+	    private String getpath(Uri uri) {
+
+	        String[] p = {MediaStore.Images.Media.DATA};
+	        Cursor c = ((Activity) getActivity()).managedQuery(uri, p, null, null, null);
+	        int colum_index = c.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+	        c.moveToFirst();
+
+	        return c.getString(colum_index);
+	    }
+
+	    /*  End Img */
+}
