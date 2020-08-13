@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+-<LinearLayout android:layout_height="match_parent" android:layout_width="match_parent" android:background="@drawable/homemain" xmlns:android="http://schemas.android.com/apk/res/android">
+
+<Button android:layout_height="50dp" android:layout_width="100dp" android:text="Login" android:layout_marginLeft="30dp" android:layout_marginTop="380dp" android:id="@+id/botton1"/>
+
+<Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="SignUp" android:layout_marginLeft="50dp" android:layout_marginTop="380dp" android:id="@+id/button2" android:layout_marginRight="22dp"/>
+
+</LinearLayout>
