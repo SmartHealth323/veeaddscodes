@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+-<ScrollView android:background="@drawable/bg" android:layout_height="fill_parent" android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+-<LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:orientation="vertical" android:layout_marginRight="20dp" android:layout_marginLeft="20dp" android:weightSum="100">
+
+<TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_gravity="center" android:layout_margin="15dp" android:textSize="25dp" android:textStyle="bold" android:textColor="@android:color/white" android:text="Patient Information"/>
+
+<EditText android:background="@drawable/textfield" android:layout_height="40dp" android:layout_width="match_parent" android:textColor="@android:color/white" android:inputType="textPersonName" android:layout_weight="10" android:focusable="false" android:paddingLeft="10dp" android:id="@+id/aname"/>
+
+<EditText android:background="@drawable/textfield" android:layout_width="match_parent" android:textColor="@android:color/white" android:inputType="textPersonName" android:layout_weight="10" android:focusable="false" android:paddingLeft="10dp" android:id="@+id/aaddress" android:height="40dp"/>
+
+<EditText android:background="@drawable/textfield" android:layout_height="40dp" android:layout_width="match_parent" android:textColor="@android:color/white" android:inputType="textPersonName" android:layout_weight="10" android:focusable="false" android:paddingLeft="10dp" android:id="@+id/ano"/>
+
+<EditText android:background="@drawable/textfield" android:layout_height="40dp" android:layout_width="match_parent" android:textColor="@android:color/white" android:inputType="textPersonName" android:layout_weight="10" android:focusable="false" android:paddingLeft="10dp" android:id="@+id/aemail"/>
+
+<EditText android:background="@drawable/textfield" android:layout_height="40dp" android:layout_width="match_parent" android:textColor="@android:color/white" android:inputType="textPersonName" android:layout_weight="10" android:focusable="false" android:paddingLeft="10dp" android:id="@+id/aproblem"/>
+
+<EditText android:background="@drawable/textfield" android:layout_height="40dp" android:layout_width="match_parent" android:textColor="@android:color/white" android:inputType="textPersonName" android:layout_weight="10" android:focusable="false" android:paddingLeft="10dp" android:id="@+id/time1"/>
+
+<EditText android:background="@drawable/textfield" android:layout_height="40dp" android:layout_width="match_parent" android:textColor="@android:color/white" android:inputType="textPersonName" android:layout_weight="10" android:focusable="false" android:paddingLeft="10dp" android:id="@+id/dname1"/>
+
+<EditText android:background="@drawable/textfield" android:layout_height="40dp" android:layout_width="match_parent" android:textColor="@android:color/white" android:inputType="textPersonName" android:layout_weight="10" android:focusable="false" android:paddingLeft="10dp" android:id="@+id/problem"/>
+
+
+-<LinearLayout android:layout_height="0dp" android:layout_width="match_parent" android:orientation="horizontal" android:weightSum="100" android:layout_margin="20dp" android:layout_weight="10">
+
+<Button android:background="@drawable/approve" android:layout_height="40dp" android:layout_width="100dp" android:layout_marginLeft="20dp" android:layout_weight="50" android:id="@+id/approve"/>
+
+<Button android:background="@drawable/insurance" android:layout_height="40dp" android:layout_width="100dp" android:layout_marginLeft="20dp" android:layout_weight="40" android:id="@+id/insu"/>
+
+</LinearLayout>
+
+</LinearLayout>
+
+</ScrollView>
