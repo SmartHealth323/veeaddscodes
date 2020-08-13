@@ -1,0 +1,125 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class patientapprove extends Activity{
+
+	SQLiteDatabase db;
+	// TextView eddate,edtime, edname11, edadd11, edno11,
+	// edemail11,edproblem,eddname;
+	EditText eddate, edtime, edname11, edadd11, edno11, edemail11, edproblem,
+			eddname;
+	Button ap, insu;
+	String approblem, apdate, aptime, apname;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.patientapprove);
+		db = openOrCreateDatabase("getdoctor", Context.MODE_PRIVATE, null);
+		// db.execSQL("drop table if exists cat");
+		db.execSQL("create table if not exists approve(ap_id integer primary key autoincrement , patient_name varchar2(500),ap_date varchar2(500),ap_time varchar2(500),ap_problem varchar2(500))");
+		db.execSQL("create table if not exists appointment(id integer primary key autoincrement , name varchar2(50) ,address varchar2(20),contact integer(12),email varchar2(20),problem varchar2(20),doname varchar2(20),date varchar2(10),time varchar2(10))");
+		db.execSQL("create table if not exists doctor(d_id integer primary key autoincrement , d_name varchar2(50) ,d_address varchar2(20),d_gender varchar2(10),d_city varchar2(10) ,d_contact integer(12),d_uid varchar2(32),d_psw varchar2(16),d_email varchar2(20),d_speciality varchar2(20),d_qualification varchar2(20),d_college varchar2(20),d_image varchar2(20),d_date varchar2(10),d_time varchar2(10))");
+		db.execSQL("create table if not exists patient(p_id integer primary key autoincrement, p_name varchar2(50),p_address varchar2(20),p_gender varchar2(10),p_city varchar2(10),p_contact integer(12),p_email varchar2(20),p_uid varchar2(32),p_psw varchar2(16),p_problem varchar2(20),p_image varchar2(20),dname varchar2(20),p_date varchar2(10),p_time varchar2(10))");
+		db.execSQL("create table if not exists receptionist(r_id integer primary key autoincrement , r_name varchar2(50) ,r_address varchar2(20),r_gender varchar2(10) ,r_city varchar2(10),r_contact integer(12),r_email varchar2(20),r_uid varchar2(32),r_psw varchar2(16),r_image varchar2(20),doctor_name varchar2(20),r_date varchar2(10),r_time varchar2(10))");
+		eddname = (EditText) findViewById(R.id.dname1);
+		edtime = (EditText) findViewById(R.id.time1);
+		eddate = (EditText) findViewById(R.id.aproblem);
+		edname11 = (EditText) findViewById(R.id.aname);
+		edadd11 = (EditText) findViewById(R.id.aaddress);
+		edno11 = (EditText) findViewById(R.id.ano);
+		edemail11 = (EditText) findViewById(R.id.aemail);
+		edproblem = (EditText) findViewById(R.id.problem);
+
+		ap = (Button) findViewById(R.id.approve);
+		insu = (Button) findViewById(R.id.insu);
+
+		Cursor c = db.rawQuery("select * from appointment where name= '"
+				+ giveappiontment.patientname + "'", null);
+		// Toast.makeText(getApplicationContext(),GiveAppointmnet.patientname+"",Toast.LENGTH_LONG).show();
+		String name = null, add = null, no = null, email = null, date1 = null, time1 = null, problem = null, dname = null;
+		if (c != null) {
+			if (c.moveToFirst()) {
+				do {
+					ArrayList<HashMap<String, String>> array = new ArrayList<HashMap<String, String>>();
+					HashMap<String, String> map = new HashMap<String, String>();
+					name = c.getString(c.getColumnIndex("name"));
+					dname = c.getString(c.getColumnIndex("doname"));
+					add = c.getString(c.getColumnIndex("address"));
+					no = c.getString(c.getColumnIndex("contact"));
+					email = c.getString(c.getColumnIndex("email"));
+					date1 = c.getString(c.getColumnIndex("date"));
+					time1 = c.getString(c.getColumnIndex("time"));
+					problem = c.getString(c.getColumnIndex("problem"));
+					map.put("date", date1);
+					map.put("prob", problem);
+					map.put("time", time1);
+					map.put("name", name);
+					map.put("add", add);
+					map.put("no", no);
+					map.put("dname3", dname);
+					map.put("email", email);// add into Hash Map
+					eddname.setText(dname);
+					eddate.setText(date1);
+					edtime.setText(time1);
+					edname11.setText(name);
+					edadd11.setText(add);
+					edno11.setText(no);
+					edemail11.setText(email);
+					edproblem.setText(problem);
+
+					array.add(map); // add into arraylist
+				} while (c.moveToNext());
+			}
+		}
+
+		insu.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+
+				Intent i = new Intent(getApplicationContext(),
+						recinsurancedetail1.class);
+				startActivity(i);
+
+			}
+		});
+
+		ap.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				apname = edname11.getText().toString();
+				apdate = eddate.getText().toString();
+				aptime = edtime.getText().toString();
+				approblem = edproblem.getText().toString();
+
+				db.execSQL("insert into approve(ap_id,patient_name,ap_date,ap_time,ap_problem) values(?,'"
+						+ apname
+						+ "','"
+						+ apdate
+						+ "','"
+						+ aptime
+						+ "','"
+						+ approblem + "')");
+				//Toast.makeText(getApplicationContext(), "Success", 3000).show();
+				finish();
+
+			}
+		});
+	}
+}
+
